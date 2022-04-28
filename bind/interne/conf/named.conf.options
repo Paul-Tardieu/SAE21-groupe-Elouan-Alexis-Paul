@@ -1,0 +1,21 @@
+acl "palexouanNet" { 	// Plages d'adresses autorisé à questionner le serveur DNS
+	10.0.0.0/16;		// Plage d'adresses du vLan1
+	10.1.0.0/16;		// Plage d'adresses du vLan2
+	10.2.0.0/16;		// Plage d'adresses du vLan3
+	10.3.0.0/16;		// Plage d'adresses du vLan4
+};
+
+acl "recursion" {		// vLan pour lesquelles la recursion est autorisé (ne contient pas le vLan Commercial)
+	10.0.0.0/16;		// vLan1
+	10.1.0.0/16;		// vLan2
+	10.2.0.0/16;		// vLan3
+};
+
+options {
+	directory "/var/cache/bind"; 
+	forwarders { 1.1.1.1; };				// DNS publique sur lequel faire la récursion.
+	allow-query { palexouanNet; };			// Accepter seulement les requêtes venant des réseaux configuré dans palexouanNet.
+	allow-recursion { recursion; };			// Accepte la récursion seulement seulement pour les réseaux configuré dans recursion.
+	allow-query-cache { recursion; };		// Accepte de répondre les données en cahce seulement pour les réseaux configuré dans recursion.
+	dnssec-validation auto;					// Essaie faire du dnssec pour les requêtes recursives.
+};

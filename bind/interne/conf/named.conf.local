@@ -1,0 +1,11 @@
+zone "palexouan.local" {
+	type master; 								// La configuration se trouve sur ce serveur et n'est pas à prendre via un transfert de zone.
+	file "/etc/bind/db.palexouan.local"; 		// Fichier de la zone "palexouan.local".
+	notify no;									// Aucun serveur esclave n'est à prévenir en cas de changements.
+};
+
+zone "palexouan" {
+	type master;								// La configuration se trouve sur ce serveur et n'est pas à prendre via un transfert de zone.
+	file "/etc/bind/db.palexouan";				// Fichier de la zone "palexouan".
+	notify no;									// Aucun serveur esclave n'est à prévenir en cas de changements.
+};

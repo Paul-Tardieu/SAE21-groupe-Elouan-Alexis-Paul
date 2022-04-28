@@ -1,0 +1,4 @@
+options {
+	directory "/var/cache/bind";	// Dossier pour le cache DNS et les zones secondaires.	
+	recursion no;					// Interdit les requêtes en dehors de sa zone.
+};

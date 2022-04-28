@@ -1,0 +1,77 @@
+ip access-list extended AdministrationIn
+permit icmp 10.2.0.0 0.0.255.255 10.1.0.0 0.0.255.255 echo-reply        ! Permet aux machines de répondre au pings du SI.
+permit udp host 0.0.0.0 host 255.255.255.255 eq bootps                  ! Permet le DHCP.
+permit tcp 10.2.0.0 0.0.255.255 10.1.0.0 0.0.255.255 established        ! Permet le SSH seulement si la connexion est établie par le SI.
+permit tcp 10.2.0.0 0.0.255.255 any eq www                              ! Permet la navigation web (HTTP).
+permit tcp 10.2.0.0 0.0.255.255 any eq 443                              ! Permet la navigation web (HTTPS).
+permit udp 10.2.0.0 0.0.255.255 host 10.0.0.53 eq domain                ! Permet la résolution DNS.
+deny ip any any log	                                                    ! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended AdministrationOut
+permit icmp 10.0.0.0 0.255.255.255 10.2.0.0 0.0.255.255 				! Permet les paquets ICMP qui viennent de l'intranet (Ping du SI et packet filtered d'une autre interface).
+permit tcp 10.1.0.0 0.0.255.255 10.2.0.0 0.0.255.255 eq 22 				! Permet au SI de SSH les postes.
+permit tcp any 10.2.0.0 0.0.255.255 established 						! Permet au réponses web de revenir.
+permit udp host 10.0.0.53 10.2.0.0 0.0.255.255 							! Permet au réponses DNS de revenir.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended CommerciauxIn
+permit icmp 10.3.0.0 0.0.255.255 10.1.0.0 0.0.255.255 echo-reply 		! Permet aux machines de répondre au pings du SI.
+permit udp host 0.0.0.0 host 255.255.255.255 eq bootps 					! Permet le DHCP.
+permit tcp 10.3.0.0 0.0.255.255 10.1.0.0 0.0.255.255 established  		! Permet le SSH seulement si la connexion est établie par le SI.
+permit tcp 10.3.0.0 0.0.255.255 host 192.168.0.80 eq www 				! Permet la navigation web seulement vers le serveur externe.
+permit tcp 10.3.0.0 0.0.255.255 host 10.0.0.80 eq www 					! Permet la navigation web seulement vers le serveur interne.
+permit udp 10.3.0.0 0.0.255.255 host 10.0.0.53 eq domain 				! Permet la résolution DNS.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended CommerciauxOut
+permit icmp 10.0.0.0 0.255.255.255 10.3.0.0 0.0.255.255 				! Permet les paquets ICMP qui viennent de l'intranet (Ping du SI et packet filtered d'une autre interface).
+permit tcp 10.1.0.0 0.0.255.255 10.3.0.0 0.0.255.255 eq 22 				! Permet au SI de SSH les postes.
+permit tcp host 192.168.0.80 10.3.0.0 0.0.255.255 established 			! Permet aux réponses web du serveur externe de revenir.
+permit tcp host 10.0.0.80 10.3.0.0 0.0.255.255 established 				! Permet aux réponses web du serveur interne de revenir.
+permit udp host 10.0.0.53 10.3.0.0 0.0.255.255 							! Permet aux réponses DNS de revenir.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended SiIn
+permit udp host 0.0.0.0 host 255.255.255.255 eq bootps 					! Permet le DHCP.
+permit tcp 10.1.0.0 0.0.255.255 10.0.0.0 0.0.255.255 eq 22 				! Permet de SSH les machines du vLan1.
+permit tcp 10.1.0.0 0.0.255.255 10.2.0.0 0.0.255.255 eq 22 				! Permet de SSH les machines du vLan3.
+permit tcp 10.1.0.0 0.0.255.255 10.3.0.0 0.0.255.255 eq 22 				! Permet de SSH les machines du vLan4.
+permit tcp 10.1.0.0 0.0.255.255 host 10.1.255.254 eq 22 				! Permet de SSH le routeur Cisco.
+permit tcp 10.1.0.0 0.0.255.255 192.168.0.0 0.0.0.255 eq 22 			! Permet de SSH les machines de la DMZ.
+permit tcp 10.1.0.0 0.0.255.255 any eq www 								! Permet la navigation web (HTTP).
+permit tcp 10.1.0.0 0.0.255.255 any eq 443 								! Permet la navigation web (HTTPS).
+permit udp 10.1.0.0 0.0.255.255 host 10.0.0.53 eq domain 				! Permet la résolution DNS.
+permit icmp 10.1.0.0 0.0.255.255 any 									! Permet le ping pour le débogage.
+deny ip any any log														! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended SiOut
+permit tcp any 10.1.0.0 0.0.255.255 established 						! Permet aux réponses web/SSH de revenir.
+permit udp host 10.0.0.53 10.1.0.0 0.0.255.255 							! Permet aux réponses DNS de revenir.
+permit icmp any 10.1.0.0 0.0.255.255 									! Permet le ping pour le débogage.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended ServIn
+permit udp host 10.0.0.53 any eq domain 								! Permet la recursion DNS et le dnssec.
+permit tcp host 10.0.0.53 any eq domain 								! Permet de questionner les serveurs racines au démarrage du DNS.
+permit icmp 10.0.0.0 0.0.255.255 10.1.0.0 0.0.255.255 echo-reply 		! Permet aux machines de répondre au pings du SI.
+permit tcp host 10.0.0.80 10.1.0.0 0.0.255.255 established 				! Permet au serveur web de répondre au vLan2.
+permit tcp host 10.0.0.80 10.2.0.0 0.0.255.255 established 				! Permet au serveur web de répondre au vLan3.
+permit tcp host 10.0.0.80 10.3.0.0 0.0.255.255 established 				! Permet au serveur web de répondre au vLan4.
+permit udp host 10.0.0.53 10.1.0.0 0.0.255.255							! Permet au serveur DNS de répondre au vLan2.
+permit udp host 10.0.0.53 10.2.0.0 0.0.255.255 							! Permet au serveur DNS de répondre au vLan3.
+permit udp host 10.0.0.53 10.3.0.0 0.0.255.255 							! Permet au serveur DNS de répondre au vLan4.
+permit tcp 10.0.0.0 0.0.255.255 10.1.0.0 0.0.255.255 established 		! Permet le SSH seulement si la connexion est établie par le SI.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
+
+ip access-list extended ServOut
+permit udp any host 10.0.0.53 											! Permet au DNS publique de répondre et au dnssec de fonctionner.
+permit tcp any host 10.0.0.53 established 								! Permet aux serveurs racines de répondre au démarrage du DNS.
+permit icmp 10.0.0.0 0.255.255.255 10.0.0.0 0.0.255.255 				! Permet les paquets ICMP qui viennent de l'intranet (Ping du SI et packet filtered d'une autre interface).
+permit tcp 10.1.0.0 0.0.255.255 host 10.0.0.80 eq www 					! Permet au vLan2 de consulter le serveur web.
+permit tcp 10.2.0.0 0.0.255.255 host 10.0.0.80 eq www 					! Permet au vLan3 de consulter le serveur web.
+permit tcp 10.3.0.0 0.0.255.255 host 10.0.0.80 eq www 					! Permet au vLan4 de consulter le serveur web.
+permit udp 10.1.0.0 0.0.255.255 host 10.0.0.53 eq domain 				! Permet au vLan2 de consulter le serveur DNS.
+permit udp 10.2.0.0 0.0.255.255 host 10.0.0.53 eq domain 				! Permet au vLan3 de consulter le serveur DNS.
+permit udp 10.3.0.0 0.0.255.255 host 10.0.0.53 eq domain 				! Permet au vLan4 de consulter le serveur DNS.
+permit tcp 10.1.0.0 0.0.255.255 10.0.0.0 0.0.255.255 eq 22 				! Permet au SI de SSH les serveurs.
+deny ip any any log 													! Rejette le reste avec des log pour le débogage.
