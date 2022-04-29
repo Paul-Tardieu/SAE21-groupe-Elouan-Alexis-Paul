@@ -94,16 +94,16 @@ Voici les liens vers les fichiers de configurations de chaque machine avec des c
 
 ### Routeur Cisco
 * [ACL](./Cisco/acl.txt)
-* [NAT]()
-* [SSH]()
-* [DHCP]()
-* [show run]() Non commenté mais contient des configurations déjà vu et d'autres évidentes commes les sous interfaces ou des adresses.
+* [NAT](./Cisco/nat.txt)
+* [SSH](./Cisco/ssh.txt)
+* [DHCP](./Cisco/dhcp.txt)
+* [show run](./Cisco/cisconf.txt) Non commenté mais contient des configurations déjà vu et d'autres évidentes commes les sous interfaces ou la route par défaut.
 
 ### Routeur Mikrotik
-* [Pare-feu]()
-* [NAT]()
-* [SSH]()
-* [/export]() Non commenté mais contient des configurations déjà vu et d'autres évidentes commes le client DHCP sur l'interface exterieur.
+* [Pare-feu](./Mikrotik/parefeu.txt)
+* [NAT/DNAT](./Mikrotik/nat.txt)
+* [SSH](./Mikrotik/ssh.txt)
+* [/export](./Mikrotik/mikroconf.txt) Non commenté mais contient des configurations déjà vu et d'autres évidentes commes le client DHCP sur l'interface exterieur.
 
 ### WEB 
 * [Dockerfile](./nginx/externe/Dockerfile)
@@ -145,9 +145,23 @@ Voici les liens vers les fichiers de configurations de chaque machine avec des c
 Un des points faibles que nous avons pu identifier est que nous avons autorisé le serveur DNS interne à recevoir et à envoyer n'importe quoi à n'importe qui en UDP. Un attaquant qui aurait compromis le serveur pourrait y ouvrir un canal en UDP et s'en servir de point de pivot pour d'autres attaques. Nous n'avons pas eu le temps pour combler cette lacune, une des solutions est d'autoriser dans les ACL la communication seulement vers l'adresse des serveurs DNS racines.
 
 ## Schéma
-![](schema.png)
+![](./images/schema.png)
 
 ## Quelques captures d'écrans
+1. Un PC du SI peu se connecter en SSH sur un PC des Commerciaux.
+![](./images/SSHCommerciaux.png)
+
+2. Un PC des commerciaux a accès aux serveurs de l'entreprise mais pas à Internet.
+![](./images/Commerciaux.png)
+
+3. Un PC de l'administration à accès à tout les serveurs web.
+![](images/Administration.png)
+
+4. Un PC du SI peu se connecter en SSH sur le routeur Cisco.
+![](images/SSHCisco.png)
+
+5. Un poste externe au réseau peu faire des requêtes DNS et acceder au serveur web publique.
+![](images/DNAT.png)
 
 ## Mettre en place sur GNS3
 Si jamais les images Docker ne sont pas correctements importés par GNS3 et qu'il en manque, il suffit de cloner le repositories et lancer le script [buildAll.sh](./buildAll.sh) qui va construire toutes les images.  

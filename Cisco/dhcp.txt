@@ -1,0 +1,20 @@
+ip dhcp pool Administration
+   network 10.2.0.0 255.255.0.0         ! Défini la range d'adresses à attribuer
+   default-router 10.2.255.254          ! Défini la gateway pour cette pool d'adresses
+   dns-server 10.0.0.53                 ! Défini le serveur DNS à utiliser
+
+ip dhcp pool Commerciaux
+   network 10.3.0.0 255.255.0.0         ! Défini la range d'adresses à attribuer
+   default-router 10.3.255.254          ! Défini la gateway pour cette pool d'adresses
+   dns-server 10.0.0.53                 ! Défini le serveur DNS à utiliser
+
+ip dhcp pool SI
+   network 10.1.0.0 255.255.0.0         ! Défini la range d'adresses à attribuer
+   default-router 10.1.255.254          ! Défini la gateway pour cette pool d'adresses
+   dns-server 10.0.0.53                 ! Défini le serveur DNS à utiliser
+
+ip dhcp excluded-address 10.1.255.254   ! Exclue l'adresse utilisé par la paserelle du vLan2
+ip dhcp excluded-address 10.2.255.254   ! Exclue l'adresse utilisé par la paserelle du vLan3
+ip dhcp excluded-address 10.3.255.254   ! Exclue l'adresse utilisé par la paserelle du vLan4
+
+! Rien n'est spécifié pour le vLan1 car les serveurs sont adressé statiquement

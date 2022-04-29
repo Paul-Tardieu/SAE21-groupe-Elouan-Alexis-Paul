@@ -1,0 +1,28 @@
+ip access-list extended noSSH
+ deny   tcp any any eq 22           ! Rejette tout ce qui arrive sur le port 22
+ permit ip any any                  ! Permet le reste
+
+interface FastEthernet0/0
+ ip access-group noSSH in           ! Rejettera tout ce qui arrive sur le port 22 de cette interface
+
+service password-encryption                                     ! Active le MD5 pour ne pas avoir de mdp en clair dans la config
+username admin secret 5 $1$Ao1n$9ULf4R5SsJoXxRbvoS6Ag0          ! Mot de passe du compte admin
+enable secret 5 $1$fVb/$UQKkVly9i0C1Zf8ht.7TP.                  ! Mot de passe pour passer en enable (le même que admin sauf que le salt est différent)
+ip ssh version 2                                                ! Supporte seulement le SSH v2 et pas le v1
+
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local                        ! Active l'authentification sur la console
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ login local                        ! Active l'authentification sur la console auxiliare
+line vty 0 4
+ login local                        ! Active l'authentification sur les terminaux virtuels
+ transport input ssh                ! Permet d'avoir un terminal virtuel via SSH
+
+! La commande n'est pas dans le show running mais il a aussi fallu générer
+! Une paire de clés RSA pour activer le serveur SSH avec "crypto key generate rsa"
