@@ -164,7 +164,7 @@ Un des points faibles que nous avons pu identifier est que nous avons autorisé 
 ![](images/DNAT.png)
 
 ## Mettre en place sur GNS3
-Si jamais les images Docker ne sont pas correctements importés par GNS3 et qu'il en manque, il suffit de cloner le repositories et lancer le script [buildAll.sh](./buildAll.sh) qui va construire toutes les images.  
+Si jamais les images Docker ne sont pas correctements importés par GNS3 et qu'il en manque, il suffit de cloner le repositories et lancer le script [buildAll.sh](./buildAll.sh) qui va construire toutes les images. Le fichier GNS3 est aussi sur moodle.
 
 ## Liens Repositories Github
 * [Repo Paul](https://github.com/Mendrick/SAE21-Paul-TARDIEU)
