@@ -1,0 +1,12 @@
+/ip service                 # Désactive tout les services par activé par défaut sauf le ssh.
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set api disabled=yes
+set winbox disabled=yes
+set api-ssl disabled=yes
+
+/ip firewall filter
+add action=accept chain=input dst-port=22 protocol=tcp src-address=192.168.0.253      # Accepte les paquets destiné à lui si ils sont pour le port 22 et venant de l'adresse du routeur Cisco
+
+# Il n'y a pas la commande mais il a aussi fallu changer le mot de passe de l'utilisateur admin avec "/user set admin password=<mot de passe>"

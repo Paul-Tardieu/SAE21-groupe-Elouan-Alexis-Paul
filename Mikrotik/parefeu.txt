@@ -1,0 +1,8 @@
+/ip firewall filter
+add action=accept chain=forward connection-state=established,related in-interface=ether1            # Accepte les paquets venant de l'extérieur si la connexion est établi ou relative à une autre
+add action=accept chain=forward connection-state=established,related,new in-interface=ether2        # Accepte les paquets venant de l'extérieur si la connexion est établi, relative à une autre ou nouvelle
+add action=accept chain=forward connection-nat-state=dstnat in-interface=ether1                     # Accepte les nouveaux paquets venant de l'extérieur si ils correspondent à une règle de DNAT
+add action=drop chain=forward                                                                       # Rejette le reste
+add action=accept chain=input dst-port=22 protocol=tcp src-address=192.168.0.253                    # Accepte les paquets destiné à lui si ils sont pour le port 22 et venant de l'adresse du routeur Cisco
+add action=accept chain=input in-interface=ether2 protocol=icmp                                     # Accepte les paquets destiné à lui si ils sont de l'ICMP venant de l'interieur
+add action=drop chain=input                                                                         # Rejette le reste des paquets lui étant destiné

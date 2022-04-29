@@ -1,0 +1,28 @@
+/interface ethernet
+set [ find default-name=ether1 ] disable-running-check=no
+set [ find default-name=ether2 ] disable-running-check=no
+/interface wireless security-profiles
+set [ find default=yes ] supplicant-identity=MikroTik
+/ip address
+add address=192.168.0.254/24 interface=ether2 network=192.168.0.0
+/ip dhcp-client
+add disabled=no interface=ether1
+/ip firewall filter
+add action=accept chain=forward connection-state=established,related in-interface=ether1
+add action=accept chain=forward connection-state=established,related,new in-interface=ether2
+add action=accept chain=forward connection-nat-state=dstnat in-interface=ether1
+add action=drop chain=forward
+add action=accept chain=input dst-port=22 protocol=tcp src-address=192.168.0.253
+add action=accept chain=input in-interface=ether2 protocol=icmp
+add action=drop chain=input
+/ip firewall nat
+add action=masquerade chain=srcnat out-interface=ether1
+add action=dst-nat chain=dstnat dst-port=80 in-interface=ether1 protocol=tcp to-addresses=192.168.0.80 to-ports=80
+add action=dst-nat chain=dstnat dst-port=53 in-interface=ether1 protocol=udp to-addresses=192.168.0.53 to-ports=53
+/ip service
+set telnet disabled=yes
+set ftp disabled=yes
+set www disabled=yes
+set api disabled=yes
+set winbox disabled=yes
+set api-ssl disabled=yes

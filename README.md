@@ -94,16 +94,16 @@ Voici les liens vers les fichiers de configurations de chaque machine avec des c
 
 ### Routeur Cisco
 * [ACL](./Cisco/acl.txt)
-* [NAT]()
-* [SSH]()
-* [DHCP]()
-* [show run]() Non commenté mais contient des configurations déjà vu et d'autres évidentes commes les sous interfaces ou des adresses.
+* [NAT](./Cisco/nat.txt)
+* [SSH](./Cisco/ssh.txt)
+* [DHCP](./Cisco/dhcp.txt)
+* [show run](./Cisco/cisconf.txt) Non commenté mais contient des configurations déjà vu et d'autres évidentes commes les sous interfaces ou la route par défaut.
 
 ### Routeur Mikrotik
-* [Pare-feu]()
-* [NAT]()
-* [SSH]()
-* [/export]() Non commenté mais contient des configurations déjà vu et d'autres évidentes commes le client DHCP sur l'interface exterieur.
+* [Pare-feu](./Mikrotik/parefeu.txt)
+* [NAT/DNAT](./Mikrotik/nat.txt)
+* [SSH](./Mikrotik/ssh.txt)
+* [/export](./Mikrotik/mikroconf.txt) Non commenté mais contient des configurations déjà vu et d'autres évidentes commes le client DHCP sur l'interface exterieur.
 
 ### WEB 
 * [Dockerfile](./nginx/externe/Dockerfile)
@@ -145,16 +145,24 @@ Voici les liens vers les fichiers de configurations de chaque machine avec des c
 Un des points faibles que nous avons pu identifier est que nous avons autorisé le serveur DNS interne à recevoir et à envoyer n'importe quoi à n'importe qui en UDP. Un attaquant qui aurait compromis le serveur pourrait y ouvrir un canal en UDP et s'en servir de point de pivot pour d'autres attaques. Nous n'avons pas eu le temps pour combler cette lacune, une des solutions est d'autoriser dans les ACL la communication seulement vers l'adresse des serveurs DNS racines.
 
 ## Schéma
-![](schema.png)
+![](./images/schema.png)
 
 ## Quelques captures d'écrans
+<<<<<<< HEAD
 1. Un PC du SI peut se connecter en SSH sur un PC des commerciaux.
+=======
+1. Un PC du SI peu se connecter en SSH sur un PC des Commerciaux.
+>>>>>>> temp
 ![](./images/SSHCommerciaux.png)
 
 2. Un PC des commerciaux a accès aux serveurs de l'entreprise mais pas à Internet.
 ![](./images/Commerciaux.png)
 
+<<<<<<< HEAD
 3. Un PC de l'administration a accès à tout les serveurs web.
+=======
+3. Un PC de l'administration à accès à tout les serveurs web.
+>>>>>>> temp
 ![](images/Administration.png)
 
 4. Un PC du SI peu se connecter en SSH sur le routeur Cisco.

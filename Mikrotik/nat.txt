@@ -1,0 +1,10 @@
+/ip firewall nat
+
+add action=masquerade chain=srcnat out-interface=ether1 in-interface=ether2
+# Remplace l'adresse des paquets arrivants par l'interface interieur par l'adresse de l'interface exterieur (tout en faisant de l'overload)
+
+add action=dst-nat chain=dstnat dst-port=80 in-interface=ether1 protocol=tcp to-addresses=192.168.0.80 to-ports=80
+# Redirige les paquets arrivants sur le port 80 de l'interface exterieur vers le serveur web
+
+add action=dst-nat chain=dstnat dst-port=53 in-interface=ether1 protocol=udp to-addresses=192.168.0.53 to-ports=53
+# Redirige les paquets arrivants sur le port 53 de l'interface exterieur vers le serveur DNS

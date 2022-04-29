@@ -1,0 +1,22 @@
+interface FastEthernet0/0
+ ip nat outside                 ! Marque l'interface comme l'extérieur du NAT
+
+interface FastEthernet0/1.1
+ ip nat inside                  ! Marque l'interface comme l'interieur du NAT
+
+interface FastEthernet0/1.2
+ ip nat inside                  ! Marque l'interface comme l'interieur du NAT
+
+interface FastEthernet0/1.3
+ ip nat inside                  ! Marque l'interface comme l'interieur du NAT
+
+interface FastEthernet0/1.4
+ ip nat inside                  ! Marque l'interface comme l'interieur du NAT
+
+access-list 2 permit 10.0.0.0 0.0.255.255               ! Autorise le vLan1 à être NATé
+access-list 2 permit 10.1.0.0 0.0.255.255               ! Autorise le vLan2 à être NATé
+access-list 2 permit 10.2.0.0 0.0.255.255               ! Autorise le vLan3 à être NATé
+access-list 2 permit 10.3.0.0 0.0.255.255               ! Autorise le vLan4 à être NATé
+access-list 2 deny   any                                ! Interdit les autres adresses à être NATé
+
+ip nat inside source list 2 interface FastEthernet0/0 overload          ! Configure le NAT en overload car il y a qu'une seule adresse publique pour plusieurs adresses privées
