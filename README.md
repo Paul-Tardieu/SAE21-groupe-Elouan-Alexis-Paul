@@ -148,21 +148,13 @@ Un des points faibles que nous avons pu identifier est que nous avons autorisé 
 ![](./images/schema.png)
 
 ## Quelques captures d'écrans
-<<<<<<< HEAD
 1. Un PC du SI peut se connecter en SSH sur un PC des commerciaux.
-=======
-1. Un PC du SI peu se connecter en SSH sur un PC des Commerciaux.
->>>>>>> temp
 ![](./images/SSHCommerciaux.png)
 
 2. Un PC des commerciaux a accès aux serveurs de l'entreprise mais pas à Internet.
 ![](./images/Commerciaux.png)
 
-<<<<<<< HEAD
 3. Un PC de l'administration a accès à tout les serveurs web.
-=======
-3. Un PC de l'administration à accès à tout les serveurs web.
->>>>>>> temp
 ![](images/Administration.png)
 
 4. Un PC du SI peu se connecter en SSH sur le routeur Cisco.
