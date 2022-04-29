@@ -148,6 +148,20 @@ Un des points faibles que nous avons pu identifier est que nous avons autorisé 
 ![](schema.png)
 
 ## Quelques captures d'écrans
+1. Un PC du SI peut se connecter en SSH sur un PC des commerciaux.
+![](./images/SSHCommerciaux.png)
+
+2. Un PC des commerciaux a accès aux serveurs de l'entreprise mais pas à Internet.
+![](./images/Commerciaux.png)
+
+3. Un PC de l'administration a accès à tout les serveurs web.
+![](images/Administration.png)
+
+4. Un PC du SI peu se connecter en SSH sur le routeur Cisco.
+![](images/SSHCisco.png)
+
+5. Un poste externe au réseau peu faire des requêtes DNS et acceder au serveur web publique.
+![](images/DNAT.png)
 
 ## Mettre en place sur GNS3
 Si jamais les images Docker ne sont pas correctements importés par GNS3 et qu'il en manque, il suffit de cloner le repositories et lancer le script [buildAll.sh](./buildAll.sh) qui va construire toutes les images.  
